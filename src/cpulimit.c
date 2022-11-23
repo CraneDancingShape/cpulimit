@@ -38,7 +38,15 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/time.h>
-#include <sys/sysctl.h>
+
+
+#if defined(__LINUX___)
+    #include <linux/version.h>
+    #if LINUX_VERSION_CODE < KERNEL_VERSION(5,5,0)
+        #include <sys/sysctl.h>
+    #endif
+#endif
+
 #include <sys/resource.h>
 #include <sys/types.h>
 #include <sys/wait.h>
