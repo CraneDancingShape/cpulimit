@@ -1,8 +1,8 @@
 BINDIR     ?= $(PREFIX)/bin
 BIN_TARGET  = cpulimit
 CC         ?=  gcc
-CFLAGS     ?= -O2 -Wall -g -D_GNU_SOURCE
-HELP2MAN   := $(shell which help2man)
+CFLAGS     ?= -O3 -Wall -g -D_GNU_SOURCE
+HELP2MAN   := $(shell which help2man 2>/dev/null)
 LIBS        = list.o process_iterator.o process_group.o
 MAN_NAME   := "CPU Utilization Limiter"
 MAN_SEC    := 1
@@ -33,7 +33,11 @@ $(BIN_TARGET):	cpulimit.c $(LIBS)
 	$(CC) -o cpulimit cpulimit.c $(LIBS) $(CFLAGS)
 
 $(MAN_TARGET): $(BIN_TARGET) $(HELP2MAN)
+ifndef HELP2MAN
+	@echo "\033[31mWarnning: help2man is not available please install.\033[m"
+else
 	$(HELP2MAN) -n $(MAN_NAME) -s $(MAN_SEC) -s $(MAN_SRC) -N ./$< > $@
+endif
 
 process_iterator.o: process_iterator.c process_iterator.h
 	$(CC) -c process_iterator.c $(CFLAGS)
