@@ -27,7 +27,7 @@
 #include <limits.h>
 #if defined(__LINUX___)
     #include <linux/version.h>
-    #if LINUX_VERSION_CODE < KERNEL_VERSION(5,1,0)
+    #if LINUX_VERSION_CODE > KERNEL_VERSION(5,1,0)
         #include <linux/limits.h>
     #endif
 #endif
