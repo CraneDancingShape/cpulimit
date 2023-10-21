@@ -19,6 +19,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+#include <stdio.h>
+#include <time.h>
+#include <sys/time.h>
+#include "process_iterator.h"
 #include <sys/vfs.h>
 
 static int get_boot_time() {

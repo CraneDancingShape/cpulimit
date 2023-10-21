@@ -26,15 +26,19 @@ static:
 strip: $(BIN_TARGET)
 	$(STRIP) $<
 
+# info:
+# 	@echo 'compile: ' $(CC) $(CFLAGS)
+# 	@echo 'install: ' $(BINDIR)/$(BIN_TARGET)
+
 install: $(TARGETS)
 	$(SUDO) install $^ $(BINDIR)
 
 $(BIN_TARGET):	cpulimit.c $(LIBS)
-	$(CC) -o cpulimit cpulimit.c $(LIBS) $(CFLAGS)
+	$(CC) -o cpulimit main.c $(LIBS) $(CFLAGS)
 
 $(MAN_TARGET): $(BIN_TARGET) $(HELP2MAN)
 ifndef HELP2MAN
-	@echo "\033[31mWarnning: help2man is not available please install.\033[m"
+	@echo "\033[33mWarnning: help2man is not available please install.\033[m"
 else
 	$(HELP2MAN) -n $(MAN_NAME) -s $(MAN_SEC) -s $(MAN_SRC) -N ./$< > $@
 endif
